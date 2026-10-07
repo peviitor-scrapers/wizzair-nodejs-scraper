@@ -10,11 +10,11 @@
 | Location | JUD. ILFOV, ORŞ. OTOPENI, CAL. BUCUREŞTILOR, NR.224E, AEROPORTUL INTERNAŢIONAL HENRI COANDĂ. TERMINAL PLECĂRI I. ETAJ 2. BIROUL 1. 075150 |
 | Website | [https://wizzair.com](https://wizzair.com) |
 | Careers | [https://careers.wizzair.com](https://careers.wizzair.com) |
-| Last Scraped | 2026-10-06 |
+| Last Scraped | 2026-10-07 |
 
 ## Current Job Listings (1)
 
-_Generated: 2026-10-06T12:58:29.165Z_
+_Generated: 2026-10-07T12:52:41.961Z_
 
 ### Fleet Manager
 
