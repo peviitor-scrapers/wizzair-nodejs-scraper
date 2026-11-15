@@ -59,7 +59,7 @@ async function searchANOFM(cif) {
     };
     const res = await fetch("https://mediere.anofm.ro/api/entity/vw_public_job_posting", {
       method: "POST",
-      timeout: TIMEOUT,
+      signal: AbortSignal.timeout(TIMEOUT),
       headers: {
         "Content-Type": "application/json",
         "User-Agent": "job_seeker_ro_spider"
@@ -146,7 +146,7 @@ export function parseJobPage(html, url) {
 }
 
 async function fetchText(url) {
-  const res = await fetch(url, { headers: BROWSER_HEADERS, timeout: TIMEOUT });
+  const res = await fetch(url, { headers: BROWSER_HEADERS, signal: AbortSignal.timeout(TIMEOUT) });
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
   return await res.text();
 }
