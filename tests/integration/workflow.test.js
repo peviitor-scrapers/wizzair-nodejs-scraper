@@ -47,6 +47,10 @@ function itIfAnaf(name, fn, timeout) {
 
 const COMPANY_CIF = companyConfig.cif;
 
+// ANAF spells the dash differently over time and the registered branch town changes
+// (Otopeni -> Vidrasau); compare only the legal entity part of the name.
+const legalEntity = (n) => n.trim().replace(/[\u2010-\u2015]/g, '-').split(/\s+-\s+SUCURSALA/i)[0];
+
 describe('Integration: API Workflow', () => {
 
   describe('ANAF API', () => {
@@ -81,7 +85,7 @@ describe('Integration: API Workflow', () => {
 
       expect(data).toBeDefined();
       expect(data.cui).toBe(+COMPANY_CIF);
-      expect(data.name.trim()).toBe(companyConfig.legalName);
+      expect(legalEntity(data.name)).toBe(legalEntity(companyConfig.legalName));
       expect(data).toHaveProperty('address');
       expect(data).toHaveProperty('registrationNumber');
       expect(data).toHaveProperty('caenCode');
@@ -236,7 +240,7 @@ describe('Integration: API Workflow', () => {
       expect(company).toBeDefined();
 
       const anafData = await anaf.getCompanyFromANAF(company.cui.toString());
-      expect(anafData.name.trim()).toBe(companyConfig.legalName);
+      expect(legalEntity(anafData.name)).toBe(legalEntity(companyConfig.legalName));
       expect(typeof anafData.inactive).toBe('boolean');
     }, 30000);
 

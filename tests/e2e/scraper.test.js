@@ -48,6 +48,10 @@ function itIfAnaf(name, fn, timeout) {
 const TEST_CIF = companyConfig.cif;
 const TEST_BRAND = companyConfig.brand;
 
+// ANAF spells the dash differently over time and the registered branch town changes
+// (Otopeni -> Vidrasau); compare only the legal entity part of the name.
+const legalEntity = (n) => n.trim().replace(/[\u2010-\u2015]/g, '-').split(/\s+-\s+SUCURSALA/i)[0];
+
 describe('E2E: Full Scraping Pipeline', () => {
 
   describe('Careers site - Real Data Fetch', () => {
@@ -145,7 +149,7 @@ describe('E2E: Full Scraping Pipeline', () => {
       const anafData = await anaf.getCompanyFromANAF(TEST_CIF);
       expect(anafData).toBeDefined();
       expect(anafData.cui.toString()).toBe(TEST_CIF);
-      expect(anafData.name.trim()).toBe(companyConfig.legalName);
+      expect(legalEntity(anafData.name)).toBe(legalEntity(companyConfig.legalName));
       expect(typeof anafData.inactive).toBe('boolean');
     }, 30000);
   });
@@ -183,7 +187,7 @@ describe('E2E: Full Scraping Pipeline', () => {
         return;
       }
 
-      expect(result.company).toBe(companyConfig.legalName);
+      expect(legalEntity(result.company)).toBe(legalEntity(companyConfig.legalName));
       expect(result.cif).toBe(TEST_CIF);
 
       if (result.existingJobsCount === 0) {
